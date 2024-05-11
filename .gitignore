@@ -1,0 +1,13 @@
+################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/Domain/bin/Debug
+/Domain/bin
+/Domain/Properties
+/.vs
+/Domain/obj
+/Infraestructure/bin/Debug
+/Infraestructure/obj
+/PortfolioManagementSystem/bin/Debug
+/PortfolioManagementSystem/obj
