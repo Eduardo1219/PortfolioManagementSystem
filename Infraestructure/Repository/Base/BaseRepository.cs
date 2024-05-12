@@ -74,6 +74,17 @@ namespace Infraestructure.Repository.Base
                 .ToListAsync();
         }
 
+        public async Task<IList<B>> GetPagedAscAsync(Expression<Func<B, bool>> search, int take, int skip, Expression<Func<B, dynamic>> order)
+        {
+            return await _context.Set<B>()
+                .AsNoTracking()
+                .Where(search)
+                .OrderBy(order)
+                .Skip(skip == 0 ? 0 : (skip - 1) * take)
+                .Take(take)
+                .ToListAsync();
+        }
+
         public async Task<int> GetCountAsync(Expression<Func<B, bool>> search)
         {
             return await _context.Set<B>()

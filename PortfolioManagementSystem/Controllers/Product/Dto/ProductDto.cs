@@ -29,7 +29,7 @@ namespace PortfolioManagementSystem.Controllers.Product.Dto
                 .NotNull().WithMessage("Price must not be null");
 
             RuleFor(x => x.DueDate)
-                .NotNull().WithMessage("Price must not be null")
+                .NotNull().WithMessage("Date must not be null")
                 .Must(ValidDate).WithMessage("Date should not be in the past");
 
             RuleFor(x => x.Active)

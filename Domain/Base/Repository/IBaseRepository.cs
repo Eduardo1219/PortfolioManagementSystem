@@ -17,6 +17,8 @@ namespace Domain.Base.Repository
 
         Task<IList<TB>> GetPagedAsync(Expression<Func<TB, bool>> search, int take, int skip, Expression<Func<TB, dynamic>> orderDesc);
 
+        Task<IList<TB>> GetPagedAscAsync(Expression<Func<TB, bool>> search, int take, int skip, Expression<Func<TB, dynamic>> order);
+
         Task<IList<TB>> GetAsync(Expression<Func<TB, bool>> search, Expression<Func<TB, dynamic>> orderDesc);
 
         Task<IList<TB>> GetAsync(Expression<Func<TB, bool>> search);

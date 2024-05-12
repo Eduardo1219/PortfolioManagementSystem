@@ -7,7 +7,7 @@ using Swashbuckle.AspNetCore.Annotations;
 
 namespace PortfolioManagementSystem.Controllers.Product.Http
 {
-    [Route("api/product")]
+    [Route("api/[controller]")]
     [SwaggerTag("Endpoints to manage products")]
     [Produces("application/json")]
     public class ProductController : Controller
@@ -27,7 +27,7 @@ namespace PortfolioManagementSystem.Controllers.Product.Http
         [HttpPost("")]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> GetDeliveryProcessById([FromBody] ProductDto dto)
+        public async Task<IActionResult> AddProduct([FromBody] ProductDto dto)
         {
             if (!ModelState.IsValid)
             {
@@ -126,9 +126,9 @@ namespace PortfolioManagementSystem.Controllers.Product.Http
             [FromHeader] int take = 5,
             [FromHeader] int skip = 0)
         {
-            var productCount = await _productService.GetPagedAsync(take, skip, price, dueDate, active);
+            var products = await _productService.GetPagedAsync(take, skip, price, dueDate, active);
 
-            return StatusCode(StatusCodes.Status200OK, productCount);
+            return StatusCode(StatusCodes.Status200OK, products);
         }
     }
 }

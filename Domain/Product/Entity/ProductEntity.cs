@@ -1,4 +1,5 @@
 ﻿using Domain.Base.Entity;
+using Domain.ProductWallet.Entity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -20,8 +21,9 @@ namespace Domain.Product.Entity
         public DateTime DueDate { get; set; }
         [Required]
         public DateTime AddedDate { get; set; } = DateTime.UtcNow.AddDays(-3);
-        public DateTime LastChangeDate { get; set; }
+        public DateTime? LastChangeDate { get; set; }
         [Required]
         public bool Active {  get; set; }
+        public List<ProductWalletEntity>? productWalletEntities { get; set; }
     }
 }
