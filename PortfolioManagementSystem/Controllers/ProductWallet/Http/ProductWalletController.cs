@@ -51,12 +51,14 @@ namespace PortfolioManagementSystem.Controllers.ProductWallet.Http
             if (wallet == null)
                 return StatusCode(StatusCodes.Status400BadRequest, "Wallet not found or not exist");
 
-            var sufficientBalance = wallet.ValidateBalance(product.Price * dto.Quantity);
+            var totalValue = product.Price * dto.Quantity;
+            var sufficientBalance = wallet.ValidateBalance(totalValue);
             if (!sufficientBalance)
                 return StatusCode(StatusCodes.Status400BadRequest, "Insufficient balance to perform the transaction");
 
             await _service.BuyProduct(wallet, product, dto.Quantity);
-
+            
+            wallet.UpdateBalanceAfterBuy(totalValue);
             await _walletService.UpdateWalletAsync(wallet);
 
             return StatusCode(StatusCodes.Status204NoContent);
@@ -95,8 +97,9 @@ namespace PortfolioManagementSystem.Controllers.ProductWallet.Http
                 return StatusCode(StatusCodes.Status400BadRequest, "Product not found or not exist");
 
             await _service.UpdateProductWallet(productWallet, dto.Quantity * -1);
-            
-            wallet.UpdateBalance(dto.Quantity * product.Price);
+
+            var totalValue = product.Price * dto.Quantity;
+            wallet.UpdateBalanceAfterSell(totalValue);
             await _walletService.UpdateWalletAsync(wallet);
 
             return StatusCode(StatusCodes.Status204NoContent);

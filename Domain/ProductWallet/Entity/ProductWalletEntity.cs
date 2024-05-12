@@ -4,6 +4,7 @@ using Domain.Wallet.Entity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,6 +16,7 @@ namespace Domain.ProductWallet.Entity
         [Required]
         public DateTime ProductPurchaseDate { get; set; }
         [Required]
+        [Column(TypeName = "money")]
         public decimal ProductValueAtPurchase {  get; set; }
         [Required]
         public int Quantity { get; set; }

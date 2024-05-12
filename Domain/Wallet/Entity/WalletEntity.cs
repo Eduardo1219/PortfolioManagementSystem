@@ -4,6 +4,7 @@ using Domain.User.Entity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,7 +14,9 @@ namespace Domain.Wallet.Entity
     public class WalletEntity : BaseEntity
     {
         [Required]
+        [Column(TypeName = "money")]
         public decimal Balance { get; set; } = 0;
+        [Column(TypeName = "money")]
         public decimal? InvestedBalance { get; set; }
         public DateTime? LastChangeDate { get; set; }
         [Required]
@@ -27,12 +30,18 @@ namespace Domain.Wallet.Entity
             if (totalValue > this.Balance)
                 return false;
 
-            this.Balance = this.Balance - totalValue;
             return true;
         }
 
-        public void UpdateBalance(decimal totalValue)
+        public void UpdateBalanceAfterBuy(decimal totalValue)
         {
+            this.Balance = this.Balance - totalValue;
+            this.InvestedBalance = totalValue;
+        }
+
+        public void UpdateBalanceAfterSell(decimal totalValue)
+        {
+            this.InvestedBalance = this.InvestedBalance - totalValue;
             this.Balance = this.Balance + totalValue;
         }
     }
