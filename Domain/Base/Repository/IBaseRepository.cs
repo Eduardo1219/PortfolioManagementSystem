@@ -22,5 +22,7 @@ namespace Domain.Base.Repository
         Task<IList<TB>> GetAsync(Expression<Func<TB, bool>> search);
 
         Task<TB> GetFirstAsync(Expression<Func<TB, bool>> search);
+
+        Task<int> GetCountAsync(Expression<Func<TB, bool>> search);
     }
 }

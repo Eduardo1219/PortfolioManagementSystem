@@ -19,7 +19,7 @@ namespace Domain.Product.Entity
         [Required]
         public DateTime DueDate { get; set; }
         [Required]
-        public DateTime AddedDate { get; set; }
+        public DateTime AddedDate { get; set; } = DateTime.UtcNow.AddDays(-3);
         public DateTime LastChangeDate { get; set; }
         [Required]
         public bool Active {  get; set; }

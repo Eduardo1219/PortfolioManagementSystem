@@ -29,7 +29,7 @@ namespace Infraestructure.Repository.Base
         public virtual async Task<B> GetByIdAsync(Guid id)
         {
             var dbSet = _context.Set<B>();
-            var entity = await dbSet.FirstOrDefaultAsync(x => x.Id == id);
+            var entity = await dbSet.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
             return entity;
         }
 
@@ -72,6 +72,13 @@ namespace Infraestructure.Repository.Base
                 .Skip(skip == 0 ? 0 : (skip - 1) * take)
                 .Take(take)
                 .ToListAsync();
+        }
+
+        public async Task<int> GetCountAsync(Expression<Func<B, bool>> search)
+        {
+            return await _context.Set<B>()
+                .AsNoTracking()
+                .Where(search).CountAsync();
         }
 
         public async Task<IList<B>> GetAsync(Expression<Func<B, bool>> search, Expression<Func<B, dynamic>> orderDesc)
