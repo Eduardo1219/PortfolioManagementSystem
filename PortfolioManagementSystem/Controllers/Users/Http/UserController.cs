@@ -1,9 +1,12 @@
 ﻿using Domain.Product.Entity;
 using Domain.Product.Service;
+using Domain.Schedule;
+using Domain.Schedule.ScheduleCron;
 using Domain.User.Entity;
 using Domain.User.Entity.Enum;
 using Domain.User.Service;
 using Domain.Wallet.Service;
+using Hangfire;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PortfolioManagementSystem.Controllers.Product.Dto;
@@ -39,18 +42,13 @@ namespace PortfolioManagementSystem.Controllers.Users.Http
         public async Task<IActionResult> AddUser([FromBody] UserDto dto)
         {
             if (!ModelState.IsValid)
-            {
                 return StatusCode(StatusCodes.Status400BadRequest, ModelState);
-            }
 
             var user = dto.UserDtoMapper();
             await _userService.AddUserAsync(user);
+            
             if (user.Permission == UserEnum.Customer)
-            {
-                await _walletService.AddWalletAsync(user.Id);
-                // hangfire?
-
-            }
+                BackgroundJob.Enqueue<IScheduleCronService>(s => s.CreateWallet(user.Id));
 
             return StatusCode(StatusCodes.Status201Created);
         }
@@ -70,16 +68,12 @@ namespace PortfolioManagementSystem.Controllers.Users.Http
         public async Task<IActionResult> UpdateUser([FromBody] UserDto dto, [FromRoute] Guid id)
         {
             if (!ModelState.IsValid)
-            {
                 return StatusCode(StatusCodes.Status400BadRequest, ModelState);
-            }
 
             var userEntity = await _userService.GetUserByIdAsync(id);
 
             if (userEntity == null)
-            {
                 return StatusCode(StatusCodes.Status404NotFound, "user not found");
-            }
 
             var entityUpdated = UserMapper.UserDtoUpdateMapper(userEntity, dto);
             await _userService.UpdateUserAsync(entityUpdated);
@@ -101,9 +95,7 @@ namespace PortfolioManagementSystem.Controllers.Users.Http
             var userEntity = await _userService.GetUserByIdAsync(id);
 
             if (userEntity == null)
-            {
                 return StatusCode(StatusCodes.Status404NotFound, "User not found");
-            }
 
             return StatusCode(StatusCodes.Status200OK, userEntity);
         }

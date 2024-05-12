@@ -2,6 +2,8 @@
 using Domain.Schedule.Entity;
 using Domain.User.Entity.Enum;
 using Domain.User.Repository;
+using Domain.Wallet.Entity;
+using Domain.Wallet.Repository;
 using Domain.WalletTransaction.Entity;
 using Domain.WalletTransaction.Repository;
 using System;
@@ -16,13 +18,16 @@ namespace Domain.Schedule.ScheduleCron
     {
         private readonly IProductRepository _productRepository;
         private readonly IUserRepository _userRepository;
+        private readonly IWalletRepository _walletRepository;
 
         public ScheduleCronService(IWalletTransactionRepository walletTransactionRepository,
             IProductRepository productRepository,
-            IUserRepository userRepository)
+            IUserRepository userRepository,
+            IWalletRepository walletRepository)
         {
             _productRepository = productRepository;
             _userRepository = userRepository;
+            _walletRepository = walletRepository;
         }
 
         public async Task SendNotification()
@@ -47,6 +52,17 @@ namespace Domain.Schedule.ScheduleCron
         private async Task SendNotificationToUser(string email, List<NotificationTemplate> notificationTemplate)
         {
             // Send to user.
+        }
+
+        public async Task CreateWallet(Guid id)
+        {
+            var walletEntity = new WalletEntity
+            {
+                Balance = 0,
+                UserId = id,
+            };
+
+            await _walletRepository.AddAsync(walletEntity);
         }
     }
 }

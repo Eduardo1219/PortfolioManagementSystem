@@ -7,12 +7,27 @@ namespace PortfolioManagementSystem.Controllers.Product.Dto
 {
     public class ProductDto
     {
+        /// <summary>
+        /// Description of the product
+        /// </summary>
         [JsonPropertyName("description")]
         public string Description { get; set; }
+
+        /// <summary>
+        /// Price of the product
+        /// </summary>
         [JsonPropertyName("price")]
         public decimal Price { get; set; }
+
+        /// <summary>
+        /// Due Date of the product
+        /// </summary>
         [JsonPropertyName("dueDate")]
         public DateTime DueDate { get; set; }
+
+        /// <summary>
+        /// Product is active
+        /// </summary>
         [JsonPropertyName("active")]
         public bool Active { get; set; }
     }
