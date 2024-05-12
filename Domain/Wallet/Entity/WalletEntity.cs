@@ -1,11 +1,13 @@
 ﻿using Domain.Base.Entity;
 using Domain.ProductWallet.Entity;
 using Domain.User.Entity;
+using Domain.WalletTransaction.Entity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -40,11 +42,28 @@ namespace Domain.Wallet.Entity
             this.LastChangeDate = DateTime.UtcNow.AddHours(-3);
         }
 
-        public void UpdateBalanceAfterSell(decimal totalValue)
+        public void UpdateInvestedBalance(decimal totalValue, OperationType operationType)
         {
-            this.InvestedBalance = this.InvestedBalance - totalValue;
-            this.Balance = this.Balance + totalValue;
             this.LastChangeDate = DateTime.UtcNow.AddHours(-3);
+            if (operationType == OperationType.Buy)
+            {
+                this.InvestedBalance = this.InvestedBalance + totalValue;
+                return;
+            }
+            this.InvestedBalance = this.InvestedBalance - totalValue;
+
+            return;
+        }
+
+        public void UpdateBalance(decimal totalValue, ModificationType modificationType)
+        {
+            if (modificationType == ModificationType.Positive)
+            {
+                this.Balance = this.Balance + totalValue;
+                return;
+            }
+
+            this.Balance = this.Balance - totalValue;
         }
     }
 }

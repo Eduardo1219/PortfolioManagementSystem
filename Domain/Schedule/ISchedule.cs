@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain.WalletTransaction.Entity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,5 +11,6 @@ namespace Domain.Schedule
     {
         public Task<bool> SendNotification();
         Task<bool> SendSms(string customerCel, int minutes);
+        Task AddTransaction(WalletTransactionEntity transaction);
     }
 }

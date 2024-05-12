@@ -36,6 +36,7 @@ builder.Services.AddHangfire((sp, config) =>
 });
 builder.Services.AddHangfireServer();
 
+
 var app = builder.Build();
 
 app.UseSwagger();
@@ -46,16 +47,13 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
-
+app.UseHangfireDashboard();
 using (var serviceScope = app.Services.CreateScope())
 {
     var services = serviceScope.ServiceProvider;
     var jobService = services.GetRequiredService<ISchedule>();
-    var minutes = services.GetRequiredService<IConfiguration>()?.GetValue<string>("Hangfire:NotificationTime") ?? "1440";
-    app.UseHangfireDashboard();
 
-
-    RecurringJob.AddOrUpdate("PushLocation", () => jobService.SendNotification(), $"*/{minutes} * * * *");
+    RecurringJob.AddOrUpdate("PushLocation", () => jobService.SendNotification(), "0 1 * * *");
 }
 
 app.Run();

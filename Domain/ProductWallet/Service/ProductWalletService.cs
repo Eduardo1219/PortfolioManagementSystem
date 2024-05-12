@@ -64,6 +64,13 @@ namespace Domain.ProductWallet.Service
             return productWallet;
         }
 
+        public async Task<List<ProductWalletEntity>> GetProductByWalletId(Guid walletId)
+        {
+            var productWallet = await _repository.GetAsync(p => p.WalletId == walletId, p => p.ProductPurchaseDate);
+
+            return productWallet.ToList();
+        }
+
         public async Task UpdateProductWallet(ProductWalletEntity entity, int quantity)
         {
             entity.UpdateQuantity(quantity);

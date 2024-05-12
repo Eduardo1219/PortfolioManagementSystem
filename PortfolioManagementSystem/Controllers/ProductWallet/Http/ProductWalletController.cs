@@ -1,8 +1,11 @@
 ﻿using Domain.Product.Entity;
 using Domain.Product.Service;
 using Domain.ProductWallet.Service;
+using Domain.Schedule;
 using Domain.User.Service;
 using Domain.Wallet.Service;
+using Domain.WalletTransaction.Entity;
+using Hangfire;
 using Microsoft.AspNetCore.Mvc;
 using PortfolioManagementSystem.Controllers.Product.Dto;
 using PortfolioManagementSystem.Controllers.ProductWallet.Dto;
@@ -56,10 +59,16 @@ namespace PortfolioManagementSystem.Controllers.ProductWallet.Http
             if (!sufficientBalance)
                 return StatusCode(StatusCodes.Status400BadRequest, "Insufficient balance to perform the transaction");
 
+            var transaction = WalletTransactionMapper.WalletTransactionEntityMapper(wallet, totalValue, OperationType.Buy);
+
             await _service.BuyProduct(wallet, product, dto.Quantity);
-            
-            wallet.UpdateBalanceAfterBuy(totalValue);
+
+            wallet.UpdateInvestedBalance(totalValue, transaction.OperationType);
+            wallet.UpdateBalance(totalValue, transaction.ModificationType);
+
             await _walletService.UpdateWalletAsync(wallet);
+
+            BackgroundJob.Enqueue<ISchedule>(s => s.AddTransaction(transaction));
 
             return StatusCode(StatusCodes.Status204NoContent);
         }
@@ -96,11 +105,18 @@ namespace PortfolioManagementSystem.Controllers.ProductWallet.Http
             if (product == null)
                 return StatusCode(StatusCodes.Status400BadRequest, "Product not found or not exist");
 
+            var totalValue = product.Price * dto.Quantity;
+
+            var transaction = WalletTransactionMapper.WalletTransactionEntityMapper(wallet, totalValue, OperationType.Sell);
+
             await _service.UpdateProductWallet(productWallet, dto.Quantity * -1);
 
-            var totalValue = product.Price * dto.Quantity;
-            wallet.UpdateBalanceAfterSell(totalValue);
+            wallet.UpdateInvestedBalance(totalValue, transaction.OperationType);
+            wallet.UpdateBalance(totalValue, transaction.ModificationType);
+
             await _walletService.UpdateWalletAsync(wallet);
+
+            BackgroundJob.Enqueue<ISchedule>(s => s.AddTransaction(transaction));
 
             return StatusCode(StatusCodes.Status204NoContent);
         }

@@ -1,8 +1,10 @@
 ﻿using Domain.MongoBase.Entity;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using MongoDB.Bson.Serialization.IdGenerators;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +14,7 @@ namespace Domain.WalletTransaction.Entity
     public class WalletTransactionEntity : BaseMongoEntity
     {
         [BsonElement("WalletId")]
+        [BsonGuidRepresentation(GuidRepresentation.Standard)]
         public Guid WalletId { get; set; }
         [BsonElement("Amount")]
         [BsonRepresentation(BsonType.Decimal128)]
@@ -32,15 +35,21 @@ namespace Domain.WalletTransaction.Entity
 
     public enum ModificationType
     {
+        [Description("Add value to balance")]
         Positive = 1,
+        [Description("Remove value to balance")]
         Negative = 2
     }
 
     public enum OperationType
     {
+        [Description("Deposit value")]
         Deposit = 1,
+        [Description("Withdraw value")]
         Withdraw = 2,
+        [Description("Buy a product and discount value from balance")]
         Buy = 3,
+        [Description("Sell a product and add value to balance")]
         Sell = 4,
     }
 }

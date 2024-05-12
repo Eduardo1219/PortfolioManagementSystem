@@ -1,5 +1,6 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using MongoDB.Bson.Serialization.IdGenerators;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,7 @@ namespace Domain.MongoBase.Entity
     public class BaseMongoEntity
     {
         [BsonId]
-        public Guid Id { get; set; }
+        [BsonGuidRepresentation(GuidRepresentation.Standard)]
+        public Guid Id { get; set; } = Guid.NewGuid();
     }
 }
