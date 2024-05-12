@@ -9,5 +9,6 @@ namespace Domain.Schedule.ScheduleCron
     public interface IScheduleCronService
     {
         Task SendNotification();
+        Task CreateWallet(Guid id);
     }
 }

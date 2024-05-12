@@ -8,16 +8,39 @@ namespace PortfolioManagementSystem.Controllers.Users.Dto
 {
     public class UserDto
     {
+        /// <summary>
+        /// User email
+        /// </summary>
         [JsonPropertyName("email")]
         public string Email { get; set; }
+
+        /// <summary>
+        /// User name
+        /// </summary>
         [JsonPropertyName("name")]
         public string Name { get; set; }
+
+        /// <summary>
+        /// User lastname
+        /// </summary>
         [JsonPropertyName("lastName")]
         public string LastName { get; set; }
+
+        /// <summary>
+        /// User birthdate
+        /// </summary>
         [JsonPropertyName("birthDate")]
         public DateTime BirthDate { get; set; }
+
+        /// <summary>
+        /// User status
+        /// </summary>
         [JsonPropertyName("active")]
         public bool Active { get; set; }
+
+        /// <summary>
+        /// User permission (profile)
+        /// </summary>
         [JsonPropertyName("permission")]
         public UserEnum Permission { get; set; }
     }
