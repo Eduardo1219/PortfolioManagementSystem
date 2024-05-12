@@ -1,5 +1,6 @@
 ﻿using Domain.Base.Entity;
 using Domain.ProductWallet.Entity;
+using Domain.Wallet.Entity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -24,6 +25,6 @@ namespace Domain.Product.Entity
         public DateTime? LastChangeDate { get; set; }
         [Required]
         public bool Active {  get; set; }
-        public List<ProductWalletEntity>? productWalletEntities { get; set; }
+        public List<ProductWalletEntity>? ProductWallet { get; set; }
     }
 }

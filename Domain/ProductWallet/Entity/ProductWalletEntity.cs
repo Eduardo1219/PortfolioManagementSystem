@@ -25,12 +25,13 @@ namespace Domain.ProductWallet.Entity
         public Guid WalletId { get; set; }
         public WalletEntity Wallet { get; set; }
         [Required]
-        public Guid ProductsId { get; set; }
+        public Guid ProductId { get; set; }
         public ProductEntity Product { get; set; }
 
         public void UpdateQuantity(int quantity)
         {
             this.Quantity = quantity;
+            LastChangeDate = DateTime.UtcNow.AddDays(-3);
         }
     }
 }

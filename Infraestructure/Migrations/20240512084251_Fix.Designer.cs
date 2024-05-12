@@ -4,6 +4,7 @@ using Infraestructure.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infraestructure.Migrations
 {
     [DbContext(typeof(PortfolioManagementContext))]
-    partial class PortfolioManagementContextModelSnapshot : ModelSnapshot
+    [Migration("20240512084251_Fix")]
+    partial class Fix
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -61,14 +64,14 @@ namespace Infraestructure.Migrations
                     b.Property<DateTime?>("LastChangeDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("ProductId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<DateTime>("ProductPurchaseDate")
                         .HasColumnType("datetime2");
 
                     b.Property<decimal>("ProductValueAtPurchase")
                         .HasColumnType("money");
+
+                    b.Property<Guid>("ProductsId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
@@ -78,7 +81,7 @@ namespace Infraestructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProductId");
+                    b.HasIndex("ProductsId");
 
                     b.HasIndex("WalletId");
 
@@ -151,9 +154,9 @@ namespace Infraestructure.Migrations
 
             modelBuilder.Entity("Domain.ProductWallet.Entity.ProductWalletEntity", b =>
                 {
-                    b.HasOne("Domain.Product.Entity.ProductEntity", "Product")
-                        .WithMany("ProductWallet")
-                        .HasForeignKey("ProductId")
+                    b.HasOne("Domain.Product.Entity.ProductEntity", "Products")
+                        .WithMany()
+                        .HasForeignKey("ProductsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -163,7 +166,7 @@ namespace Infraestructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Product");
+                    b.Navigation("Products");
 
                     b.Navigation("Wallet");
                 });
@@ -177,11 +180,6 @@ namespace Infraestructure.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Domain.Product.Entity.ProductEntity", b =>
-                {
-                    b.Navigation("ProductWallet");
                 });
 
             modelBuilder.Entity("Domain.User.Entity.UserEntity", b =>

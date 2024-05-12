@@ -37,12 +37,14 @@ namespace Domain.Wallet.Entity
         {
             this.Balance = this.Balance - totalValue;
             this.InvestedBalance = totalValue;
+            this.LastChangeDate = DateTime.UtcNow.AddHours(-3);
         }
 
         public void UpdateBalanceAfterSell(decimal totalValue)
         {
             this.InvestedBalance = this.InvestedBalance - totalValue;
             this.Balance = this.Balance + totalValue;
+            this.LastChangeDate = DateTime.UtcNow.AddHours(-3);
         }
     }
 }

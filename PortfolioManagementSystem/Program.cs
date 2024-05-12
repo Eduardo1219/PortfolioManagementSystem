@@ -1,5 +1,7 @@
+using Domain.Schedule;
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using Hangfire;
 using Microsoft.OpenApi.Models;
 using PortfolioManagementSystem.Controllers.Product.Dto;
 using PortfolioManagementSystem.DomainInjection;
@@ -27,6 +29,12 @@ builder.Services.AddSwaggerGen(options =>
 });
 
 builder.Services.AddInfraestructure(builder.Configuration);
+builder.Services.AddHangfire((sp, config) =>
+{
+    var conn = sp.GetRequiredService<IConfiguration>().GetConnectionString("Default");
+    config.UseSqlServerStorage(conn);
+});
+builder.Services.AddHangfireServer();
 
 var app = builder.Build();
 
@@ -38,5 +46,16 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+using (var serviceScope = app.Services.CreateScope())
+{
+    var services = serviceScope.ServiceProvider;
+    var jobService = services.GetRequiredService<ISchedule>();
+    var minutes = services.GetRequiredService<IConfiguration>()?.GetValue<string>("Hangfire:NotificationTime") ?? "1440";
+    app.UseHangfireDashboard();
+
+
+    RecurringJob.AddOrUpdate("PushLocation", () => jobService.SendNotification(), $"*/{minutes} * * * *");
+}
 
 app.Run();

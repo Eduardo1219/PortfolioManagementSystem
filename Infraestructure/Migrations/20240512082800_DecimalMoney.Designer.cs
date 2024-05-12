@@ -4,6 +4,7 @@ using Infraestructure.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infraestructure.Migrations
 {
     [DbContext(typeof(PortfolioManagementContext))]
-    partial class PortfolioManagementContextModelSnapshot : ModelSnapshot
+    [Migration("20240512082800_DecimalMoney")]
+    partial class DecimalMoney
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -69,6 +72,9 @@ namespace Infraestructure.Migrations
 
                     b.Property<decimal>("ProductValueAtPurchase")
                         .HasColumnType("money");
+
+                    b.Property<Guid>("ProductsId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
@@ -152,7 +158,7 @@ namespace Infraestructure.Migrations
             modelBuilder.Entity("Domain.ProductWallet.Entity.ProductWalletEntity", b =>
                 {
                     b.HasOne("Domain.Product.Entity.ProductEntity", "Product")
-                        .WithMany("ProductWallet")
+                        .WithMany("productWalletEntities")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -181,7 +187,7 @@ namespace Infraestructure.Migrations
 
             modelBuilder.Entity("Domain.Product.Entity.ProductEntity", b =>
                 {
-                    b.Navigation("ProductWallet");
+                    b.Navigation("productWalletEntities");
                 });
 
             modelBuilder.Entity("Domain.User.Entity.UserEntity", b =>

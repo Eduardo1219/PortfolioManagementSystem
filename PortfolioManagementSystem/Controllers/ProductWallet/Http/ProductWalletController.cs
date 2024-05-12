@@ -92,7 +92,7 @@ namespace PortfolioManagementSystem.Controllers.ProductWallet.Http
             if (wallet == null)
                 return StatusCode(StatusCodes.Status400BadRequest, "Wallet not found or not exist");
 
-            var product = await _productService.GetProductByIdAsync(productWallet.ProductsId);
+            var product = await _productService.GetProductByIdAsync(productWallet.ProductId);
             if (product == null)
                 return StatusCode(StatusCodes.Status400BadRequest, "Product not found or not exist");
 

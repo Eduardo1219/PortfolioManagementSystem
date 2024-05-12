@@ -43,19 +43,23 @@ namespace Domain.ProductWallet.Service
             var entity = new ProductWalletEntity
             {
                 ProductValueAtPurchase = productEntity.Price,
-                Product = productEntity,
                 ProductPurchaseDate = DateTime.Now,
                 Quantity = quantity,
                 WalletId = walletEntity.Id,
-                ProductsId = productEntity.Id
+                ProductId = productEntity.Id
             };
 
-            await _repository.AddAsync(entity);
+            try
+            {
+                await _repository.AddAsync(entity);
+            }
+            catch(Exception ex) { }
+            
         }
 
         public async Task<ProductWalletEntity> GetProductWallet(Guid walletId, Guid productId)
         {
-            var productWallet = await _repository.GetFirstAsync(p => p.WalletId == walletId && p.ProductsId == productId);
+            var productWallet = await _repository.GetFirstAsync(p => p.WalletId == walletId && p.ProductId == productId);
 
             return productWallet;
         }
