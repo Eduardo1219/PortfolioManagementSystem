@@ -14,8 +14,7 @@ namespace Domain.WalletTransaction.Entity
     public class WalletTransactionEntity : BaseMongoEntity
     {
         [BsonElement("WalletId")]
-        [BsonGuidRepresentation(GuidRepresentation.Standard)]
-        public Guid WalletId { get; set; }
+        public string WalletId { get; set; }
         [BsonElement("Amount")]
         [BsonRepresentation(BsonType.Decimal128)]
         public decimal Amount { get; set; }

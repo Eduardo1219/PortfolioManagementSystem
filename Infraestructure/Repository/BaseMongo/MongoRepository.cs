@@ -5,6 +5,7 @@ using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -31,6 +32,11 @@ namespace Infraestructure.Repository.BaseMongo
         public virtual async Task<T> GetByIdAsync(Guid id)
         {
             return await _model.Find<T>(m => m.Id == id).FirstOrDefaultAsync();
+        }
+
+        public virtual async Task<List<T>> GetAsync(Expression<Func<T, bool>> search)
+        {
+            return await _model.Find<T>(search).ToListAsync();
         }
 
         public Task RemoveAsync(T entity)

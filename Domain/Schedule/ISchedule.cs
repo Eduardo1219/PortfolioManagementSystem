@@ -9,8 +9,6 @@ namespace Domain.Schedule
 {
     public interface ISchedule
     {
-        public Task<bool> SendNotification();
-        Task<bool> SendSms(string customerCel, int minutes);
         Task AddTransaction(WalletTransactionEntity transaction);
     }
 }

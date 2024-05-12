@@ -5,6 +5,7 @@ using Domain.Product.Service;
 using Domain.ProductWallet.Repository;
 using Domain.ProductWallet.Service;
 using Domain.Schedule;
+using Domain.Schedule.ScheduleCron;
 using Domain.User.Repository;
 using Domain.User.Service;
 using Domain.Wallet.Repository;
@@ -86,7 +87,7 @@ namespace PortfolioManagementSystem.DomainInjection
         public static void ConfigureJobs(this IServiceCollection services)
         {
             services.AddSingleton<ISchedule, ScheduleService>();
-            //services.AddSingleton<IWalletTransactionRepository, WalletTransactionRepository>();
+            services.AddScoped<IScheduleCronService, ScheduleCronService>();
         }
     }
 }

@@ -10,6 +10,6 @@ namespace Domain.WalletTransaction.Service
     public interface IWalletTransactionService
     {
         Task AddTransaction(WalletTransactionEntity entity);
-        Task<WalletTransactionEntity> GetById(Guid id);
+        Task<List<WalletTransactionEntity>> GetById(Guid id);
     }
 }

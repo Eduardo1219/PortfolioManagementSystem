@@ -1,5 +1,6 @@
 ﻿using Domain.WalletTransaction.Entity;
 using Domain.WalletTransaction.Repository;
+using MongoDB.Bson.Serialization.Serializers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,9 +24,9 @@ namespace Domain.WalletTransaction.Service
             await _repository.AddAsync(entity);
         }
 
-        public async Task<WalletTransactionEntity> GetById(Guid id)
+        public async Task<List<WalletTransactionEntity>> GetById(Guid id)
         {
-            return await _repository.GetByIdAsync(id);
+            return await _repository.GetAsync(t => t.WalletId == id.ToString());
         }
     }
 }

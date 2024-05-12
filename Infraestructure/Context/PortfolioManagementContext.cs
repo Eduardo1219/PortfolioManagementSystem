@@ -22,12 +22,25 @@ namespace Infraestructure.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            
-            //modelBuilder.Entity<WalletEntity>()
-            //    .HasOne<UserEntity>()
-            //    .WithOne(e => e.Blog)
-            //    .HasForeignKey<BlogHeader>(e => e.BlogId)
-            //    .IsRequired();
+            modelBuilder.Entity<ProductEntity>().HasData(
+            new ProductEntity
+            {
+                Id = Guid.NewGuid(),
+                Active = true,
+                AddedDate = DateTime.UtcNow.AddHours(-3),
+                Description = "LCI",
+                DueDate = DateTime.UtcNow.AddDays(10),
+                Price = 100
+            },
+            new ProductEntity
+            {
+                Id = Guid.NewGuid(),
+                Active = true,
+                AddedDate = DateTime.UtcNow.AddHours(-3),
+                Description = "LCA",
+                DueDate = DateTime.UtcNow.AddDays(15),
+                Price = 180
+            });
 
 
             base.OnModelCreating(modelBuilder);

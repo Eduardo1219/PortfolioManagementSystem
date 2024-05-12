@@ -1,4 +1,5 @@
 using Domain.Schedule;
+using Domain.Schedule.ScheduleCron;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Hangfire;
@@ -51,9 +52,9 @@ app.UseHangfireDashboard();
 using (var serviceScope = app.Services.CreateScope())
 {
     var services = serviceScope.ServiceProvider;
-    var jobService = services.GetRequiredService<ISchedule>();
+    var jobService = services.GetRequiredService<IScheduleCronService>();
 
-    RecurringJob.AddOrUpdate("PushLocation", () => jobService.SendNotification(), "0 1 * * *");
+    RecurringJob.AddOrUpdate("NotifyManager", () => jobService.SendNotification(), "0 1 * * *");
 }
 
 app.Run();

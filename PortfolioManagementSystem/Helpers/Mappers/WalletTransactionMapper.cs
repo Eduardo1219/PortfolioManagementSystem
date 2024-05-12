@@ -17,7 +17,7 @@ namespace PortfolioManagementSystem.Helpers.Mappers
                 ModificationType = mofificationType,
                 OperationType = operationType,
                 OperationDate = DateTime.UtcNow.AddHours(-3),
-                WalletId = wallet.Id,
+                WalletId = wallet.Id.ToString(),
             };
 
             return walletTransaction;
