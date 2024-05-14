@@ -15,6 +15,22 @@ namespace Domain.WalletTransaction.Entity
     {
         [BsonElement("WalletId")]
         public string WalletId { get; set; }
+        [BsonElement("MonthTransactions")]
+        public int MonthTransactions { get; set; }
+        [BsonElement("LastModificationDate")]
+        public DateTime LastModificationDate { get; set; }
+        [BsonElement("Transactions")]
+        public List<WalletTransactionItem> WalletTransactionItems { get; set; } = [];
+
+
+        public void AddTransaction(WalletTransactionItem walletTransaction)
+        {
+            this.WalletTransactionItems.Add(walletTransaction);
+        }
+    }
+
+    public class WalletTransactionItem
+    {
         [BsonElement("Amount")]
         [BsonRepresentation(BsonType.Decimal128)]
         public decimal Amount { get; set; }

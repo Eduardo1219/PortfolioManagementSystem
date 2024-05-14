@@ -6,18 +6,17 @@ namespace PortfolioManagementSystem.Helpers.Mappers
 {
     public static class WalletTransactionMapper
     {
-        public static WalletTransactionEntity WalletTransactionEntityMapper(WalletEntity wallet, decimal amount, OperationType operationType)
+        public static WalletTransactionItem WalletTransactionEntityMapper(WalletEntity wallet, decimal amount, OperationType operationType)
         {
             var mofificationType = operationType.OperationTypeModification();
-            var walletTransaction = new WalletTransactionEntity
+            var walletTransaction = new WalletTransactionItem
             {
                 Amount = amount,
                 PreviousBalance = wallet.Balance,
                 LaterBalance = mofificationType == ModificationType.Positive ?  wallet.Balance + amount : wallet.Balance - amount,
                 ModificationType = mofificationType,
                 OperationType = operationType,
-                OperationDate = DateTime.UtcNow.AddHours(-3),
-                WalletId = wallet.Id.ToString(),
+                OperationDate = DateTime.UtcNow.AddHours(-3)
             };
 
             return walletTransaction;

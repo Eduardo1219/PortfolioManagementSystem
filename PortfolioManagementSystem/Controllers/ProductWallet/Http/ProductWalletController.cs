@@ -68,7 +68,7 @@ namespace PortfolioManagementSystem.Controllers.ProductWallet.Http
 
             await _walletService.UpdateWalletAsync(wallet);
 
-            BackgroundJob.Enqueue<ISchedule>(s => s.AddTransaction(transaction));
+            BackgroundJob.Enqueue<ISchedule>(s => s.AddTransaction(transaction, wallet.Id, transaction.OperationDate.Month));
 
             return StatusCode(StatusCodes.Status204NoContent);
         }
@@ -116,7 +116,7 @@ namespace PortfolioManagementSystem.Controllers.ProductWallet.Http
 
             await _walletService.UpdateWalletAsync(wallet);
 
-            BackgroundJob.Enqueue<ISchedule>(s => s.AddTransaction(transaction));
+            BackgroundJob.Enqueue<ISchedule>(s => s.AddTransaction(transaction, wallet.Id, transaction.OperationDate.Month));
 
             return StatusCode(StatusCodes.Status204NoContent);
         }

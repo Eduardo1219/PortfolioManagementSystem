@@ -9,7 +9,8 @@ namespace Domain.WalletTransaction.Service
 {
     public interface IWalletTransactionService
     {
-        Task AddTransaction(WalletTransactionEntity entity);
-        Task<List<WalletTransactionEntity>> GetById(Guid id);
+        Task AddTransaction(WalletTransactionItem entity, Guid walletId, int month);
+        Task<List<WalletTransactionItem>> GetByIdAndPeriod(Guid id, DateTime? initialDate, DateTime? endDate);
+        Task<WalletTransactionEntity> GetById(Guid id, int month);
     }
 }

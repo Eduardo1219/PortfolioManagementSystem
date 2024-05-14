@@ -1,11 +1,15 @@
 ﻿using Domain.MongoBase.Entity;
 using Domain.MongoBase.Repository;
 using Domain.MongoBase.Settings;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization;
+using MongoDB.Bson.Serialization.Serializers;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -34,7 +38,12 @@ namespace Infraestructure.Repository.BaseMongo
             return await _model.Find<T>(m => m.Id == id).FirstOrDefaultAsync();
         }
 
-        public virtual async Task<List<T>> GetAsync(Expression<Func<T, bool>> search)
+        public virtual async Task<T> GetAsync(Expression<Func<T, bool>> search)
+        {
+            return await _model.Find<T>(search).FirstOrDefaultAsync();
+        }
+
+        public virtual async Task<List<T>> GetManyAsync(Expression<Func<T, bool>> search)
         {
             return await _model.Find<T>(search).ToListAsync();
         }
@@ -49,9 +58,9 @@ namespace Infraestructure.Repository.BaseMongo
             throw new NotImplementedException();
         }
 
-        public Task UpdateAsync(T entity)
+        public virtual async Task UpdateAsync(T entity)
         {
-            throw new NotImplementedException();
+            await _model.ReplaceOneAsync(t => t.Id == entity.Id, entity);
         }
     }
 }

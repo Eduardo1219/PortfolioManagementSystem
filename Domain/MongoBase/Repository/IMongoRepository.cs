@@ -18,7 +18,11 @@ namespace Domain.MongoBase.Repository
 
         Task UpdateAsync(TB entity);
 
-        Task<List<TB>> GetAsync(Expression<Func<TB, bool>> search);
+        //Task UpdateAsync(Expression<Func<TB, bool>> search);
+
+        Task<List<TB>> GetManyAsync(Expression<Func<TB, bool>> search);
+
+        Task<TB> GetAsync(Expression<Func<TB, bool>> search);
 
         Task<TB> GetByIdAsync(Guid id);
     }

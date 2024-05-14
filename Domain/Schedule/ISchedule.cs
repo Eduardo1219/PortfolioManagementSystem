@@ -9,6 +9,6 @@ namespace Domain.Schedule
 {
     public interface ISchedule
     {
-        Task AddTransaction(WalletTransactionEntity transaction);
+        Task AddTransaction(WalletTransactionItem transaction, Guid walletId, int month);
     }
 }

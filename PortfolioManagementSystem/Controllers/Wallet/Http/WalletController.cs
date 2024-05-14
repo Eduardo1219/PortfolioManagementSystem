@@ -84,7 +84,7 @@ namespace PortfolioManagementSystem.Controllers.Wallet.Http
         /// Make Transaction
         /// </summary>
         /// <param name="id">Wallet Id</param>
-        /// <response code="204">Transaction Succesfully</response>
+        /// <response code="201">Transaction Succesfully</response>
         /// <response code="404">Not Found</response>
         [HttpPost("transaction/{id}")]
         [ProducesResponseType(typeof(UserEntity), 200)]
@@ -101,7 +101,7 @@ namespace PortfolioManagementSystem.Controllers.Wallet.Http
             wallet.UpdateBalance(transactionDto.Amount, transaction.ModificationType);
             await _walletService.UpdateWalletAsync(wallet);
 
-            BackgroundJob.Enqueue<ISchedule>(s => s.AddTransaction(transaction));
+            BackgroundJob.Enqueue<ISchedule>(s => s.AddTransaction(transaction, wallet.Id, transaction.OperationDate.Month));
 
             return StatusCode(StatusCodes.Status201Created);
         }
