@@ -12,7 +12,7 @@ namespace Domain.MongoBase.Entity
     public class BaseMongoEntity
     {
         [BsonId]
-        [BsonGuidRepresentation(GuidRepresentation.Standard)]
+        //[BsonGuidRepresentation(GuidRepresentation.Standard)]
         public Guid Id { get; set; } = Guid.NewGuid();
     }
 }
