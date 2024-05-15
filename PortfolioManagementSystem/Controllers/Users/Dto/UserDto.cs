@@ -75,8 +75,15 @@ namespace PortfolioManagementSystem.Controllers.Users.Dto
 
         private bool ValidDate(DateTime date)
         {
-            var minorAge = date.Date.AddYears(+18).Year < DateTime.UtcNow.AddDays(-3).Year;
-            return !minorAge;
+            var currentDate = DateTime.UtcNow.AddHours(-3);
+
+            if (date.AddYears(18).Year > currentDate.Year)
+                return false;
+
+            if ((currentDate.Month < date.Month || (currentDate.Month == date.Month && currentDate.Day < date.Day)) && date.AddYears(18).Year == currentDate.Year)
+                return false;
+
+            return true;
         }
     }
 }

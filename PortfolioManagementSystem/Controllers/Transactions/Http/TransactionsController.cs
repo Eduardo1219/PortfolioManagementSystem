@@ -2,6 +2,7 @@
 using Domain.ProductWallet.Service;
 using Domain.Schedule;
 using Domain.Wallet.Service;
+using Domain.WalletTransaction.Entity;
 using Domain.WalletTransaction.Service;
 using Hangfire;
 using Microsoft.AspNetCore.Mvc;
@@ -37,8 +38,8 @@ namespace PortfolioManagementSystem.Controllers.Transactions.Http
         /// <response code="200">Transactions</response>
         /// <response code="400">Bad Request</response>
         [HttpGet("walletId/{id}")]
-        [ProducesResponseType(200)]
-        [ProducesResponseType(404)]
+        [ProducesResponseType(typeof(List<WalletTransactionItem>), 200)]
+        [ProducesResponseType(typeof(string), 404)]
         public async Task<IActionResult> GetTransactions(
             [FromRoute] Guid id,
             [FromHeader] DateTime? initialDate,
