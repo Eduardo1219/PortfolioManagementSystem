@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using PortfolioManagementSystem.Controllers.Product.Dto;
 using System.Text.Json.Serialization;
 
 namespace PortfolioManagementSystem.Controllers.ProductWallet.Dto

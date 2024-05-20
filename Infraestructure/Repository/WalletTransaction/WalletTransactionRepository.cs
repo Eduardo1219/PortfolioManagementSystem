@@ -17,9 +17,10 @@ namespace Infraestructure.Repository.WalletTransaction
 {
     public class WalletTransactionRepository : MongoRepository<WalletTransactionEntity>, IWalletTransactionRepository
     {
-        private readonly IDatabaseSettings settings;
+        private readonly IDatabaseSettings _settings;
         public WalletTransactionRepository(IDatabaseSettings settings) : base(settings)
         {
+            _settings = settings;
         }
     }
 }

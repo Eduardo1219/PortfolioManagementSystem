@@ -1,13 +1,10 @@
-﻿using Domain.Product.Entity;
-using Domain.Product.Service;
+﻿using Domain.Product.Service;
 using Domain.ProductWallet.Service;
 using Domain.Schedule;
-using Domain.User.Service;
 using Domain.Wallet.Service;
 using Domain.WalletTransaction.Entity;
 using Hangfire;
 using Microsoft.AspNetCore.Mvc;
-using PortfolioManagementSystem.Controllers.Product.Dto;
 using PortfolioManagementSystem.Controllers.ProductWallet.Dto;
 using PortfolioManagementSystem.Helpers.Mappers;
 using Swashbuckle.AspNetCore.Annotations;

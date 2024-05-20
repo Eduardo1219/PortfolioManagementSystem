@@ -1,7 +1,5 @@
 ﻿using Domain.User.Entity.Enum;
 using FluentValidation;
-using PortfolioManagementSystem.Controllers.Product.Dto;
-using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
 namespace PortfolioManagementSystem.Controllers.Users.Dto

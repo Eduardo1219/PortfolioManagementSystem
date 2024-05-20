@@ -1,16 +1,13 @@
-﻿using Domain.Product.Entity;
-using Domain.User.Entity.Enum;
+﻿using Domain.ProductWallet.Service;
+using Domain.Schedule;
 using Domain.User.Entity;
 using Domain.User.Service;
 using Domain.Wallet.Service;
+using Hangfire;
 using Microsoft.AspNetCore.Mvc;
-using PortfolioManagementSystem.Controllers.Users.Dto;
+using PortfolioManagementSystem.Controllers.Wallet.Dto;
 using PortfolioManagementSystem.Helpers.Mappers;
 using Swashbuckle.AspNetCore.Annotations;
-using Domain.ProductWallet.Service;
-using PortfolioManagementSystem.Controllers.Wallet.Dto;
-using Domain.Schedule;
-using Hangfire;
 
 namespace PortfolioManagementSystem.Controllers.Wallet.Http
 {

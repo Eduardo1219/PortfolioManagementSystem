@@ -1,6 +1,5 @@
 ﻿using Domain.WalletTransaction.Entity;
 using FluentValidation;
-using PortfolioManagementSystem.Controllers.Product.Dto;
 
 namespace PortfolioManagementSystem.Controllers.Wallet.Dto
 {

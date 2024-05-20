@@ -1,15 +1,11 @@
 ﻿using Domain.Product.Entity;
-using Domain.Product.Service;
-using Domain.Schedule;
 using Domain.Schedule.ScheduleCron;
 using Domain.User.Entity;
 using Domain.User.Entity.Enum;
 using Domain.User.Service;
 using Domain.Wallet.Service;
 using Hangfire;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using PortfolioManagementSystem.Controllers.Product.Dto;
 using PortfolioManagementSystem.Controllers.Users.Dto;
 using PortfolioManagementSystem.Helpers.Mappers;
 using Swashbuckle.AspNetCore.Annotations;
